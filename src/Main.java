@@ -33,12 +33,30 @@ public class Main {
 
         // Выполнение задания №4
         int[][] array4 = new int[10][10];
-        for(int x=0; x<array4.length; x++){
+        for(int y=0; y<array4.length; y++){
             System.out.println();
-            for (int y=0; y<array4[x].length; y++){
-                System.out.print(array4[x][y]);
+            for (int x=0; x<array4[y].length; x++){
+                System.out.print(x==y || x == (array4[y].length - y - 1) ? "[X]" : "[ ]");
             }
-
         }
+        
+        //Выполнение задания №5
+        int[] array5 = new int[20];
+        for (int i=0; i<array5.length; i++){
+            array5[i]= (int) (Math.random()*100);
+        }
+        int maxNumber = 0;
+        for (int i=0; i<array5.length; i++){
+            if (array5[i]> maxNumber) maxNumber = array5[i];
+        }
+        int minNumber = maxNumber;
+        for (int i=0; i<array5.length; i++){
+            if (array5[i]<minNumber) minNumber = array5[i];
+        }
+        for (int i=0; i<array5.length; i++){
+            System.out.print(array5[i] + " ");
+        }
+
+        System.out.println("Минимальное число " + minNumber + " Максимальное число " + maxNumber);
     }
 }
