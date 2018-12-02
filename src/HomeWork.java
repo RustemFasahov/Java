@@ -22,7 +22,9 @@ public class HomeWork {
 
     static boolean answer (int number1, int number2){
         int addition = number1 + number2;
-        if (addition >= 10 && addition <= 20) return true;
-        else return false;
+        boolean answer;
+        return answer = (addition >= 10 && addition <= 20) ? true : false;
+
     }
 }
+
