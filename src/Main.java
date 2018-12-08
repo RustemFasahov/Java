@@ -4,41 +4,43 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(task1(10)));
-        System.out.println(Arrays.toString(task2()));
-        System.out.println(Arrays.toString(task3()));
-        task4(10,10);
+        int[] array = {1,0,0,1,1,1,1,0,1,0};
+//        System.out.println(Arrays.toString(task1(array)));
 
-        int[] maxNumberMinNumber = task5(10);
-        System.out.printf("Максимальный номер в цикле %d, минимальный %d.",maxNumberMinNumber[0], maxNumberMinNumber[1]);
+//        System.out.println(Arrays.toString(task2()));
+//        System.out.println(Arrays.toString(task3()));
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Введите степень для числа 2");
-        int degree = in.nextInt();
-        System.out.printf("Число 2 в степени %d, равняется %d.", degree, task6(degree));
+       int[][] array1 = task4(10,10);
+        for (int i = 0; i < array1.length; i++) {
+            System.out.println(Arrays.toString(array1[i]));
+        }
 
-        task7(5,5);
 
-        int[] array = {1,2,2,1,2,1,1,6,4,3,1,1,1,3,1,1,1};
-        System.out.println(task8(array));
-
-        int[] arrayOnOffset = {1,2,3,4,5,6,7,8};
-        int offsetNumber = 2;
-        System.out.printf("Смещение массива %s на число %d, приводит к результату %s.",
-                          Arrays.toString(array),offsetNumber, Arrays.toString(task9(arrayOnOffset,offsetNumber)));
+//        int[] maxNumberMinNumber = task5(10);
+//        System.out.printf("Максимальный номер в цикле %d, минимальный %d.",maxNumberMinNumber[0], maxNumberMinNumber[1]);
+//
+//        Scanner in = new Scanner(System.in);
+//        System.out.println("Введите степень для числа 2");
+//        int degree = in.nextInt();
+//        System.out.printf("Число 2 в степени %d, равняется %d.", degree, task6(degree));
+//
+//        task7(5,5);
+//
+//        int[] array = {1,2,2,1,2,1,1,6,4,3,1,1,1,3,1,1,1};
+//        System.out.println(task8(array));
+//
+//        int[] arrayOnOffset = {1,2,3,4,5,6,7,8};
+//        int offsetNumber = 2;
+//        System.out.printf("Смещение массива %s на число %d, приводит к результату %s.",
+//                          Arrays.toString(array),offsetNumber, Arrays.toString(task9(arrayOnOffset,offsetNumber)));
 
     }
 //1. Задать целочисленный массив, состоящий из элементов 0 и 1.
 // Например: [ 1, 1, 0, 0, 1, 0, 1, 1, 0, 0 ].
 // С помощью цикла и условия заменить 0 на 1, 1 на 0;
-    public static int[] task1(int number) {
-        int[] array = new int[number];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = (int) (Math.random() * 2);
-        }
+    public static int[] task1(int[] array) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] == 1) array[i] = 0;
-            else if (array[i] == 0) array[i] = 1;
         }
         return array;
     }
@@ -68,14 +70,16 @@ public class Main {
 //4. Создать квадратный двумерный целочисленный массив
 // (количество строк и столбцов одинаковое), и с помощью цикла(-ов)
 // заполнить его диагональные элементы единицами;
-    public static void task4(int numberX, int numberY) {
+    public static int[][] task4(int numberX, int numberY) {
         int[][] array4 = new int[numberY][numberX];
         for (int y = 0; y < array4.length; y++) {
-            System.out.println();
             for (int x = 0; x < array4[y].length; x++) {
-                System.out.print(x == y || x == (array4[y].length - y - 1) ? "[1]" : "[ ]");
+                if(x == y || x == (array4[y].length - y - 1)){
+                    array4[x][y] = 1;
+                }
             }
         }
+        return array4;
     }
 
 //5. ** Задать одномерный массив и найти в нем минимальный и
