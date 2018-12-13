@@ -1,54 +1,109 @@
 import java.util.Scanner;
 
-class Main{
-    public static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args) {
-        do {
-            playGame();
-            System.out.println("Желаете играть повторно? да - 1, нет - 0");
-        }while (enterNumber()==1);
-        System.out.println("<<<<<<<<<<<< Игра окончена >>>>>>>>>>>>");
+class Main {
+    static char [][] area;
+    static final char X = 'X';
+    static final char O = 'O';
+    static final char def = '#';
+    static int mapSize = 3;
+    static Scanner scanner = new Scanner(System.in);
 
-    }
-
-    public static int randomNumber(){
-        return (int)(Math.random()*10);
-    }
-
-    public static void playGame(){
-        int life = 3;
-        int rememberNumber = randomNumber();
-        System.out.println();
-        System.out.println("<<<<<<<<<<<< Игра началась >>>>>>>>>>>>>");
-        System.out.println("Угадайте число от 0 до 9.");
-        while (life >0){
-            System.out.println("Введите число");
-            int number = enterNumber();
-            if(rememberNumber == number){
-                System.out.println("Угадал!");
-                break;
-            }
-            else {
-                if (rememberNumber > number){
-                    System.out.println("Загаданное число больше :)");
-                }
-                else{
-                    System.out.println("Загаданное число меньше :(" );
-                }
-                life--;
-                System.out.println("Количество жизней " + life);
+    public static void initArea (int size) {
+        area = new char[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                area[i][j] = def;
             }
         }
-        if(life == 0)System.out.println("Вы проиграли ;( (Подслушано, что загаданное число - " + rememberNumber + ")");
-        else System.out.println("Вы выиграли :-)");
     }
 
-    public static int enterNumber(){
-        int number;
-        do {
-            number = scanner.nextInt();
-        }while (number<0 || number>9);
-            return number;
+    static void printArea (){
+        System.out.println();
+        for (int i = 0; i < area.length; i++) {
+            for (int j = 0; j < area[i].length; j++) {
+                System.out.print(area[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    static void playerHit (int size) {
+        System.out.println("Сделайте ход. 1 - горизонталь  2 - вертикаль");
+        int num1 = scanner.nextInt() ;
+        int num2 = scanner.nextInt() ;
+        while (num1 > size || num2 > size || area[num1-1][num2-1] == X || area[num1-1][num2-1] == O) {
+            System.out.println("Введите правильный диапазон чисел до " + size);
+            num1 = scanner.nextInt();
+            num2 = scanner.nextInt();
+        }
+        area[num1-1][num2-1] = X;
+    }
+
+    static void aiHit (){
+        int num1;
+        int num2;
+        do{
+            num1 = (int) (Math.random()*3);
+            num2 = (int) (Math.random()*3);
+        }while (area[num1][num2] == O || area[num1][num2] == X);
+        area[num1][num2] = O;
+    }
+
+    static boolean chek(char sym){
+        for (int i = 0; i < mapSize; i++) {
+            if(area[i][0] == area[i][1] && area[i][0] == area[i][2] && area[i][0] == sym) {
+                return true;
+            }
+            else if(area[0][i] == area[1][i] && area[0][i]== area[2][i] && area[0][i] == sym) {
+                return true;
+            }
+        }
+        if (area[0][0] == area[1][1] && area[0][0] == area[2][2] && area[0][0] == sym) {
+            return true;
+        }
+        else if (area[0][2] == area[1][1] && area[0][2] == area[2][0] && area[0][2] == sym) {
+            return true;
+        }
+        return false;
+    }
+
+    static boolean areaFull(){
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                if(area[i][j] == def) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        initArea(mapSize);
+        printArea();
+        while (true){
+            playerHit(mapSize);
+            if(chek(X)){
+                printArea();
+                System.out.println("Победил игрок!");
+                break;
+            };
+            aiHit();
+            if (chek(O)){
+                printArea();
+                System.out.println("Искуственный интелект чудом победил!");
+                break;
+            };
+            printArea();
+            if(areaFull()){
+                printArea();
+                System.out.println("Ничья, некуда ходить");
+                break;
+            }
+        }
+        System.out.println("Игра окончена!");
     }
 }
+
 
